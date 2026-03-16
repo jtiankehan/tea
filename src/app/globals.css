@@ -1,26 +1,58 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-tea-red: #bb3f3f; /* 朱砂红：常用于强调、按钮 */
+  --color-tea-green-dark: #1f3d33; /* 黛绿：常用于深色背景 */
+  --color-tea-green-light: #437a63; /* 竹绿：用于次级品牌色 */
+  --color-tea-gold: #cfaa6b; /* 赤金：用于边框、图标、文字提亮 */
+  --color-tea-bg-light: #f7f4ed; /* 米黄/宣纸色：浅色模式主背景 */
+  --color-tea-bg-dark: #121a16; /* 极深绿/近墨色：深色模式主背景 */
+
+  --font-serif: "Noto Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --font-sans: "Inter", "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+:root {
+  --background: var(--color-tea-bg-light);
+  --foreground: #2d2d2d;
+  --primary: var(--color-tea-red);
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-tea-green-light);
+  --secondary-foreground: #ffffff;
+  --accent: var(--color-tea-gold);
+  --accent-foreground: #1a1a1a;
+  
+  --radius: 0.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: var(--color-tea-bg-dark);
+    --foreground: #e0e0e0;
+    --primary: #d65050; /* 暗黑模式下稍微提亮的红 */
+    --primary-foreground: #ffffff;
+    --secondary: var(--color-tea-green-light);
+    --secondary-foreground: #ffffff;
+    --accent: #d8b67b;
+    --accent-foreground: #1a1a1a;
   }
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 一些自定义的实用类可以写在这里 */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .glass-effect {
+    @apply bg-white/60 dark:bg-black/40 backdrop-blur-md border border-white/20 dark:border-white/10;
+  }
 }
