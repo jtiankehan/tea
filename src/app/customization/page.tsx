@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+import InteractiveBox from "@/components/InteractiveBox";
+import { motion } from "framer-motion";
+import { STEPS } from "@/lib/constants";
 
 /* ─── 茶底 ─── */
 const teas = [
@@ -25,20 +30,6 @@ const PRICE_TIERS = [
 function getBoxPrice(qty: number) {
   return PRICE_TIERS.find((t) => qty >= t.min && qty <= t.max)?.boxPrice ?? 28;
 }
-
-/* ─── SVG 材质纹理（URL-encoded） ─── */
-const PATTERNS: Record<string, string> = {
-  guoyun: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='40'%3E%3Cpath d='M0,20 Q10,5 20,20 Q30,35 40,20 Q50,5 60,20 Q70,35 80,20' stroke='rgba(207,170,107,0.15)' fill='none' stroke-width='1.5'/%3E%3C/svg%3E")`,
-  jianye: `linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)`,
-  huacai: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Cpath d='M20,0 L40,20 L20,40 L0,20 Z' stroke='rgba(212,175,55,0.13)' fill='none' stroke-width='1'/%3E%3C/svg%3E")`,
-  jiling: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ccircle cx='15' cy='15' r='1.5' fill='rgba(207,170,107,0.25)'/%3E%3Ccircle cx='0' cy='0' r='1' fill='rgba(207,170,107,0.15)'/%3E%3Ccircle cx='30' cy='0' r='1' fill='rgba(207,170,107,0.15)'/%3E%3C/svg%3E")`,
-};
-const PATTERN_SIZE: Record<string, string> = {
-  guoyun: "80px 40px",
-  jianye: "20px 20px",
-  huacai: "40px 40px",
-  jiling: "30px 30px",
-};
 
 /* ─── 包装系列 ─── */
 type Design = {
@@ -102,34 +93,10 @@ function findDesign(id: string | null) {
   return null;
 }
 
-/* ─── CSS 3D 礼盒组件 ─── */
+/* ─── WebGL CSS 降级 Wrapper (兼容旧的 CSS prop 接口) ─── */
 function Box3D({ design, companyName, greeting, size = "md" }: {
   design: Design | null; companyName: string; greeting: string; size?: "sm" | "md" | "lg";
 }) {
-  const angleRef = useRef(-20);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const rafRef = useRef<number>(0);
-
-  useEffect(() => {
-    if (!design) return;
-    let dir = -1;
-    const tick = () => {
-      angleRef.current += dir * 0.3;
-      if (angleRef.current < -32) dir = 1;
-      if (angleRef.current > -12) dir = -1;
-      if (boxRef.current) {
-        boxRef.current.style.transform = `rotateX(-9deg) rotateY(${angleRef.current}deg)`;
-      }
-      rafRef.current = requestAnimationFrame(tick);
-    };
-    rafRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(rafRef.current);
-  }, [design]);
-
-  const W = size === "lg" ? 150 : size === "sm" ? 100 : 125;
-  const H = size === "lg" ? 175 : size === "sm" ? 120 : 148;
-  const D = size === "lg" ? 44 : size === "sm" ? 30 : 38;
-
   if (!design) {
     return (
       <div className="flex items-center justify-center h-full w-full text-white/25 font-serif text-sm tracking-wider">
@@ -138,63 +105,30 @@ function Box3D({ design, companyName, greeting, size = "md" }: {
     );
   }
 
-  return (
-    <div style={{ perspective: "520px", perspectiveOrigin: "50% 45%", display: "flex", alignItems: "center", justifyContent: "center", height: "100%", width: "100%" }}>
-      <div
-        ref={boxRef}
-        style={{ transformStyle: "preserve-3d", position: "relative", width: `${W}px`, height: `${H}px`, transform: `rotateX(-9deg) rotateY(-20deg)` }}
-      >
-        {/* 正面 */}
-        <div style={{
-          position: "absolute", inset: 0, borderRadius: "6px",
-          background: design.gradient,
-          backgroundImage: PATTERNS[design.id.split("-")[0]],
-          backgroundSize: PATTERN_SIZE[design.id.split("-")[0]],
-          border: `1.5px solid ${design.accent}55`,
-          transform: `translateZ(${D / 2}px)`,
-          overflow: "hidden", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-          boxShadow: `inset 0 0 40px rgba(0,0,0,0.25), 0 0 30px ${design.accent}22`,
-        }}>
-          {/* 腰带竖 */}
-          <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: "18px", opacity: 0.45, background: design.accent }} />
-          {/* 腰带横 */}
-          <div style={{ position: "absolute", left: 0, right: 0, top: "50%", transform: "translateY(-50%)", height: "14px", opacity: 0.45, background: design.accent }} />
-          {/* 中心装饰 */}
-          <span style={{ fontSize: size === "sm" ? "1.4rem" : "2rem", position: "relative", zIndex: 1 }}>{design.pattern}</span>
-          {/* 企业名 */}
-          {companyName && (
-            <p style={{ color: design.accent, fontFamily: "serif", fontSize: size === "sm" ? "9px" : "11px", letterSpacing: "0.2em", position: "relative", zIndex: 1, marginTop: "4px", textAlign: "center", padding: "0 8px", maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-              {companyName.slice(0, size === "sm" ? 4 : 6)}
-            </p>
-          )}
-          {/* 祝语 */}
-          {greeting && (
-            <p style={{ color: `${design.accent}99`, fontFamily: "serif", fontSize: "9px", letterSpacing: "0.1em", position: "relative", zIndex: 1, marginTop: "2px", textAlign: "center", padding: "0 6px", maxWidth: "100%", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }}>
-              {greeting.slice(0, 8)}
-            </p>
-          )}
-          {/* 四角装饰线 */}
-          {["top-2 left-2 border-t border-l", "top-2 right-2 border-t border-r", "bottom-2 left-2 border-b border-l", "bottom-2 right-2 border-b border-r"].map((cls) => (
-            <div key={cls} className={`absolute w-3 h-3 ${cls}`} style={{ borderColor: design.accent, opacity: 0.7 }} />
-          ))}
+  // 性能优化：同屏渲染多个 WebGL Canvas 极其消耗性能
+  // 对于仅用于展示的缩略图 (size="sm")，我们降级使用 CSS 渲染
+  if (size === "sm") {
+    return (
+      <div className="w-full h-full flex items-center justify-center p-6">
+        <div 
+           className="w-full h-full rounded-xl shadow-inner border-2 relative overflow-hidden flex flex-col items-center justify-center"
+           style={{ background: design.gradient, borderColor: `${design.accent}55` }}
+        >
+          <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", transform: "translateX(-50%)", width: "12px", opacity: 0.3, background: design.accent }} />
+          <div style={{ position: "absolute", left: 0, right: 0, top: "50%", transform: "translateY(-50%)", height: "10px", opacity: 0.3, background: design.accent }} />
+          <span className="text-4xl relative z-10" style={{ filter: `drop-shadow(0 4px 6px rgba(0,0,0,0.3))` }}>{design.pattern}</span>
         </div>
-        {/* 右侧面 */}
-        <div style={{
-          position: "absolute", top: 0, left: `${W}px`, width: `${D}px`, height: `${H}px`,
-          background: `linear-gradient(to right, rgba(0,0,0,0.35), rgba(0,0,0,0.65))`,
-          borderRadius: "0 4px 4px 0",
-          transform: `rotateY(90deg)`, transformOrigin: "left",
-          border: `1px solid ${design.accent}22`,
-        }} />
-        {/* 顶面 */}
-        <div style={{
-          position: "absolute", top: `-${D}px`, left: 0, width: `${W}px`, height: `${D}px`,
-          background: `linear-gradient(to bottom, rgba(255,255,255,0.18), rgba(255,255,255,0.05))`,
-          borderRadius: "4px 4px 0 0",
-          transform: `rotateX(90deg)`, transformOrigin: "bottom",
-          border: `1px solid ${design.accent}44`,
-        }} />
       </div>
+    );
+  }
+
+  return (
+    <div className="w-full h-full relative">
+       <InteractiveBox 
+         design={design}
+         size={size} 
+         customText={greeting ? `${companyName} ${greeting}` : companyName}
+       />
     </div>
   );
 }
@@ -336,6 +270,42 @@ export default function CustomizationPage() {
         </div>
       </section>
 
+      {/* ── Customization Steps ── */}
+      <section className="py-24 bg-white relative">
+        <div className="container mx-auto px-8 max-w-[1400px]">
+          <div className="text-center mb-20">
+            <h2 className="font-serif text-3xl font-bold tracking-[0.2em] mb-4">定制流程</h2>
+            <div className="w-12 h-[2px] bg-[#cc4040] mx-auto mb-4" />
+            <p className="text-gray-400 text-[10px] tracking-[0.5em] uppercase">Simple Steps to Perfection</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-12 relative max-w-[1000px] mx-auto">
+            {/* 背景连线 */}
+            <div className="hidden md:block absolute top-[60px] left-1/4 right-1/4 h-[1px] bg-gray-100 -z-10" />
+
+            {STEPS.map((step, i) => (
+              <motion.div 
+                key={i}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2 }}
+                viewport={{ once: true }}
+                className="flex flex-col items-center text-center group"
+              >
+                <div className="w-24 h-24 rounded-3xl bg-[#faf8f4] flex items-center justify-center mb-8 relative group-hover:bg-[#cc4040] transition-colors duration-500 shadow-md">
+                  <span className="absolute -top-3 -right-3 text-3xl font-serif font-bold text-gray-100 group-hover:text-white/20 transition-colors">{step.n}</span>
+                  <div className="w-16 h-16 relative grayscale group-hover:grayscale-0 transition-all duration-700">
+                    <Image src={step.img} alt={step.title} fill sizes="96px" className="object-contain" />
+                  </div>
+                </div>
+                <h3 className="font-serif text-xl font-bold mb-4 tracking-widest">{step.title}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed max-w-[240px] font-sans">{step.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* 步骤条 */}
       <div className="bg-white border-b border-gray-100 sticky top-16 z-40">
         <div className="container mx-auto px-8 max-w-[1100px] py-5">
@@ -433,8 +403,6 @@ export default function CustomizationPage() {
                             {/* 预览区 */}
                             <div className="h-64 relative overflow-hidden flex flex-col items-center justify-start pt-6" style={{
                               background: d.gradient,
-                              backgroundImage: PATTERNS[seriesId],
-                              backgroundSize: PATTERN_SIZE[seriesId],
                             }}>
                               {/* 角线装饰 */}
                               {["top-3 left-3 border-t-2 border-l-2", "top-3 right-3 border-t-2 border-r-2", "bottom-3 left-3 border-b-2 border-l-2", "bottom-3 right-3 border-b-2 border-r-2"].map((cls) => (
@@ -443,7 +411,7 @@ export default function CustomizationPage() {
                               {/* 标签 */}
                               <span className="text-[9px] px-3 py-0.5 rounded-full font-sans tracking-wider border mb-3" style={{ color: d.accent, borderColor: `${d.accent}55`, background: `${d.accent}11` }}>{d.tag}</span>
                               {/* 3D 礼盒 */}
-                              <div className="flex-1 w-full">
+                              <div className="flex-1 w-full pointer-events-none">
                                 <Box3D design={d} companyName="" greeting="" size="sm" />
                               </div>
                               {/* 光晕 */}

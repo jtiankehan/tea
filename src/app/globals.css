@@ -38,12 +38,21 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, .font-serif {
+  font-family: var(--font-serif);
 }
 
 /* 一些自定义的实用类可以写在这里 */
