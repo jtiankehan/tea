@@ -295,7 +295,7 @@ export default function CustomizationPage() {
                 <div className="w-24 h-24 rounded-3xl bg-[#faf8f4] flex items-center justify-center mb-8 relative group-hover:bg-[#cc4040] transition-colors duration-500 shadow-md">
                   <span className="absolute -top-3 -right-3 text-3xl font-serif font-bold text-gray-100 group-hover:text-white/20 transition-colors">{step.n}</span>
                   <div className="w-16 h-16 relative grayscale group-hover:grayscale-0 transition-all duration-700">
-                    <Image src={step.img} alt={step.title} fill sizes="96px" className="object-contain" />
+                    <Image src={step.img} alt={`茶礼定制流程 - ${step.title}`} fill sizes="96px" className="object-contain" />
                   </div>
                 </div>
                 <h3 className="font-serif text-xl font-bold mb-4 tracking-widest">{step.title}</h3>
@@ -342,7 +342,7 @@ export default function CustomizationPage() {
                         {active && <div className="absolute top-3 right-3 w-7 h-7 bg-[#cc4040] rounded-full flex items-center justify-center text-white font-bold text-xs z-10">✓</div>}
                         <div className="absolute top-3 left-3"><span className="text-[10px] bg-white/20 text-white px-2 py-0.5 rounded-full font-sans tracking-wider">{tea.tag}</span></div>
                         <div className="w-24 h-28 relative drop-shadow-2xl translate-y-6 group-hover:scale-110 transition-transform duration-500">
-                          <Image src={tea.img} alt={tea.name} fill className="object-contain" />
+                          <Image src={tea.img} alt={`饮者留茗 - ${tea.name}茶样`} fill className="object-contain" />
                         </div>
                       </div>
                       <div className="bg-white p-4 text-center">

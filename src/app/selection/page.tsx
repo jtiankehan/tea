@@ -182,7 +182,11 @@ export default function SelectionPage() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   className="group bg-white rounded-[2.5rem] overflow-hidden shadow-[0_10px_40px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-3 hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.15)] transition-all duration-700 flex flex-col h-[520px] relative"
                 >
-                  <Link href={`/selection/${product.id}`} className="absolute inset-0 z-10" />
+                  <Link 
+                    href={`/selection/${product.id}`} 
+                    className="absolute inset-0 z-10" 
+                    aria-label={`查看 ${product.name} 详情`} 
+                  />
                   
                   {/* 彩色顶部 */}
                   <div
@@ -199,7 +203,12 @@ export default function SelectionPage() {
                     </div>
 
                     <div className="w-52 h-60 relative z-10 translate-y-16 group-hover:scale-110 transition-transform duration-700 ease-out drop-shadow-[20px_40px_40px_rgba(0,0,0,0.5)]">
-                      <Image src={product.img} alt={product.name} fill className="object-contain" />
+                      <Image 
+                        src={product.img} 
+                        alt={`饮者留茗 - ${product.name}高山原叶茶礼`} 
+                        fill 
+                        className="object-contain" 
+                      />
                     </div>
                   </div>
 
@@ -214,12 +223,14 @@ export default function SelectionPage() {
                     <div className="flex gap-4 mt-auto w-full relative z-20">
                       <Link
                         href={`/selection/${product.id}`}
+                        aria-label={`鉴赏 ${product.name} 详情`}
                         className="flex-1 text-gray-500 border border-gray-200 py-3 rounded-full text-xs font-serif tracking-widest hover:border-[#1f3d33] hover:text-[#1f3d33] transition-all bg-white"
                       >
                         鉴赏详情
                       </Link>
                       <Link
                         href="/customization"
+                        aria-label={`立即定制 ${product.name} 礼盒`}
                         className="flex-1 text-white py-3 rounded-full text-xs font-serif tracking-widest shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all outline-none"
                         style={{ background: product.btnBg }}
                       >

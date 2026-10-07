@@ -1,0 +1,65 @@
+# ==========================================
+# Robots.txt for tea.reicen.com (饮者留茗)
+# Support Search Engines & AI LLM Crawlers (GEO)
+# ==========================================
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /mybox
+
+# --- Major Search Engines ---
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: Sogou web spider
+Allow: /
+
+User-agent: 360Spider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# --- AI & Generative Engine Crawlers (GEO) ---
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+# --- Knowledge & Map ---
+Sitemap: https://tea.reicen.com/sitemap.xml

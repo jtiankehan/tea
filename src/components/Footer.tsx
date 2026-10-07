@@ -41,24 +41,30 @@ export default function Footer() {
           <div>
             <h4 className="font-serif text-lg font-bold mb-6 tracking-widest border-b border-white/10 pb-2">联系咨询</h4>
             <div className="space-y-5">
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-center">
                 <Phone size={18} className="text-[#cfaa6b] shrink-0" />
-                <p className="text-sm font-serif text-gray-400">400 110 3366</p>
+                <a href="tel:4001103366" aria-label="拨打全国服务热线 400 110 3366" className="text-sm font-serif text-gray-400 hover:text-[#cfaa6b] transition-colors">
+                  400 110 3366
+                </a>
               </div>
-              <div className="flex gap-4">
-                <MapPin size={18} className="text-[#cfaa6b] shrink-0" />
-                <p className="text-sm font-serif text-gray-400 leading-relaxed">深圳市龙华区新区大道3号翠岭华庭17号</p>
+              <div className="flex gap-4 items-start">
+                <MapPin size={18} className="text-[#cfaa6b] shrink-0 mt-0.5" />
+                <address className="text-sm font-serif text-gray-400 leading-relaxed not-italic">
+                  深圳市龙华区新区大道3号翠岭华庭17号
+                </address>
               </div>
-              <div className="flex gap-4">
+              <div className="flex gap-4 items-center">
                 <Mail size={18} className="text-[#cfaa6b] shrink-0" />
-                <p className="text-sm font-serif text-gray-400">service@yczbpuer.com</p>
+                <a href="mailto:service@yczbpuer.com" aria-label="发送邮件咨询 service@yczbpuer.com" className="text-sm font-serif text-gray-400 hover:text-[#cfaa6b] transition-colors">
+                  service@yczbpuer.com
+                </a>
               </div>
             </div>
           </div>
 
           {/* QR Code Placeholder / Trust */}
           <div className="flex flex-col items-center lg:items-end">
-            <div className="w-28 h-28 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 relative overflow-hidden group">
+            <div className="w-28 h-28 bg-white/5 rounded-2xl flex items-center justify-center border border-white/10 relative overflow-hidden group" aria-label="官方微信服务号二维码">
               <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity" />
               <p className="text-[10px] text-gray-500 text-center font-sans tracking-widest uppercase">Official<br/>WeChat</p>
             </div>
@@ -70,8 +76,8 @@ export default function Footer() {
         <div className="mt-20 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-[0.3em] font-sans">
           <p>© 2026 YIN ZHE LIU MING. ALL RIGHTS RESERVED.</p>
           <div className="flex gap-8">
-            <Link href="#" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-white transition-colors">Terms of Service</Link>
+            <Link href="/story" aria-label="品牌隐私说明" className="hover:text-white transition-colors">Privacy Policy</Link>
+            <Link href="/contact" aria-label="服务条款与支持" className="hover:text-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>

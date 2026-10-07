@@ -24,7 +24,7 @@ export default function Home() {
       <section className="relative w-full mt-16 bg-[#bdd3c9] overflow-hidden" style={{ height: 'calc(100vh - 64px)', minHeight: '600px', maxHeight: '800px' }}>
         <Image
           src="/hero_bg_scene.png"
-          alt="Hero Banner"
+          alt="饮者留茗 - 云南传统茶礼定制山水茶境背景图"
           fill
           className="object-cover object-center"
           priority
@@ -52,7 +52,7 @@ export default function Home() {
                 </p>
                 
                 <div className="flex flex-wrap gap-6">
-                  <Link href="/customization">
+                  <Link href="/customization" aria-label="立即定制茶礼盒">
                     <motion.button 
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
@@ -62,7 +62,7 @@ export default function Home() {
                       立即定制礼盒
                     </motion.button>
                   </Link>
-                  <Link href="/selection">
+                  <Link href="/selection" aria-label="前往甄选好茶">
                     <button className="px-10 py-4 rounded-full font-serif tracking-widest text-[#2a3a30] border border-[#2a3a30]/20 hover:bg-[#2a3a30]/5 transition-all">
                       甄选端好茶
                     </button>
@@ -83,7 +83,7 @@ export default function Home() {
           <div className="relative w-full h-full group">
             <Image
               src="/hero_tea_box.png"
-              alt="Product Box"
+              alt="饮者留茗 - 高端定制商务茶礼盒与精品茶罐展示"
               fill
               className="object-contain object-right-bottom drop-shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]"
               priority
@@ -143,7 +143,7 @@ export default function Home() {
               </ul>
 
               
-              {/* 经典系列快速选择 */}
+                  {/* 经典系列快速选择 */}
               <div className="mt-12">
                 <p className="text-[10px] tracking-[0.3em] text-[#cfaa6b] uppercase mb-4 mb-6">经典系列快速预览</p>
                 <div className="flex flex-wrap gap-4">
@@ -153,6 +153,7 @@ export default function Home() {
                       onClick={() => setActiveDesign(box)}
                       className={`group relative w-12 h-12 rounded-xl border-2 overflow-hidden transition-all duration-300 ${activeDesign.id === box.id ? 'border-[#cfaa6b] scale-110 shadow-lg' : 'border-white/10 hover:border-white/30'}`}
                       title={box.name}
+                      aria-label={`预览 ${box.name} 款式礼盒`}
                     >
                       <div className="absolute inset-0" style={{ background: box.gradient }} />
                       <div className="absolute inset-0 flex items-center justify-center text-lg">{box.pattern}</div>
@@ -172,15 +173,17 @@ export default function Home() {
               </div>
 
               <div className="flex gap-4 mt-10">
-                <Link href="/customization" className="flex-1">
+                <Link href="/customization" className="flex-1" aria-label="前往深度定制专属茶礼">
                   <button className="w-full group flex items-center justify-center gap-4 px-8 py-4 bg-white text-[#101726] rounded-full font-bold tracking-widest hover:bg-[#cfaa6b] hover:text-white transition-all shadow-2xl">
                     去深度定制
                     <ArrowRight size={20} className="group-hover:translate-x-2 transition-transform" />
                   </button>
                 </Link>
-                <button className="px-8 py-4 bg-[#cc4040] text-white rounded-full font-bold tracking-widest hover:brightness-110 transition-all shadow-xl">
-                  直接结算
-                </button>
+                <Link href="/customization" aria-label="立即前往结算茶礼">
+                  <button className="px-8 py-4 bg-[#cc4040] text-white rounded-full font-bold tracking-widest hover:brightness-110 transition-all shadow-xl">
+                    直接结算
+                  </button>
+                </Link>
               </div>
             </motion.div>
 
@@ -203,6 +206,7 @@ export default function Home() {
                   <input 
                     type="text" 
                     placeholder="在这里输入您的专属寄语..." 
+                    aria-label="定制激光雕刻专属寄语（最多15字）"
                     value={customText}
                     onChange={(e) => setCustomText(e.target.value.slice(0, 15))}
                     className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-xs font-serif placeholder:text-white/20 focus:outline-none focus:border-[#cfaa6b]/50 transition-all shadow-inner"
@@ -248,14 +252,14 @@ export default function Home() {
                      <span className="bg-white/90 backdrop-blur-sm text-[#333] px-3 py-1 rounded-full text-[10px] font-bold shadow-lg">¥{product.price}</span>
                    </div>
                    <div className="w-48 h-56 relative z-10 translate-y-16 group-hover:scale-110 transition-transform duration-700 ease-out drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)]">
-                     <Image src={product.img} alt={product.name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-contain" />
+                     <Image src={product.img} alt={`饮者留茗 - ${product.name}陶瓷罐装茶礼`} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-contain" />
                    </div>
                 </div>
                 <div className="h-[45%] bg-[#faf9f7] flex flex-col items-center pt-24 pb-8 px-6 text-center">
                    <h3 className="font-serif text-2xl font-bold text-[#1a1a1a]">{product.name}</h3>
                    <div className="w-10 h-[1px] bg-[#cfaa6b] my-3 group-hover:w-16 transition-all duration-500" />
                    <p className="text-[10px] text-gray-400 tracking-[0.2em] font-sans uppercase mb-8">{product.en}</p>
-                   <Link href="/customization" className="mt-auto px-10 py-3 rounded-full text-white text-[12px] font-serif tracking-[0.2em] shadow-lg hover:brightness-110 transition-all font-bold" style={{ background: product.btnBg }}>
+                   <Link href="/customization" aria-label={`立即定制 ${product.name} 茶礼礼盒`} className="mt-auto px-10 py-3 rounded-full text-white text-[12px] font-serif tracking-[0.2em] shadow-lg hover:brightness-110 transition-all font-bold" style={{ background: product.btnBg }}>
                      立即定制
                    </Link>
                 </div>

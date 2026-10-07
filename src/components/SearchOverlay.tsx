@@ -51,6 +51,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
           {/* 关闭按钮 */}
           <button 
             onClick={onClose}
+            aria-label="关闭搜索遮罩"
             className="absolute top-8 right-8 md:top-12 md:right-12 p-3 text-gray-400 hover:text-[#1f3d33] transition-colors rounded-full hover:bg-gray-100"
           >
             <X size={32} strokeWidth={1.5} />
@@ -64,6 +65,7 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                 autoFocus
                 type="text"
                 placeholder="搜索您心仪的茗茶..."
+                aria-label="搜索心仪的茗茶或茶礼"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 className="w-full bg-transparent text-4xl md:text-6xl font-serif text-[#1f3d33] pl-16 outline-none placeholder:text-gray-100"
@@ -84,10 +86,16 @@ export default function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
                       <Link 
                         href={item.link} 
                         onClick={onClose}
+                        aria-label={`查看 ${item.name} 详情`}
                         className="group flex items-center gap-6 p-4 rounded-3xl hover:bg-[#faf8f4] transition-all"
                       >
                         <div className="w-24 h-24 relative bg-[#f0ece4] rounded-2xl flex items-center justify-center p-4">
-                          <Image src={item.img} alt={item.name} fill className="object-contain p-4 group-hover:scale-110 transition-transform duration-500" />
+                          <Image 
+                            src={item.img} 
+                            alt={`饮者留茗 - ${item.name}高山原叶茶礼`} 
+                            fill 
+                            className="object-contain p-4 group-hover:scale-110 transition-transform duration-500" 
+                          />
                         </div>
                         <div className="flex-1">
                           <span className="text-[10px] tracking-[0.2em] text-[#cfaa6b] uppercase font-sans mb-1 block">{item.category}</span>

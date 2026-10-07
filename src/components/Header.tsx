@@ -23,7 +23,7 @@ export default function Header() {
       <header className="fixed top-0 w-full z-50 bg-[#fffdfa] border-b border-gray-100/50 shadow-sm h-16 flex items-center">
         <div className="container mx-auto px-8 max-w-[1400px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
+          <Link href="/" className="flex items-center gap-3" aria-label="饮者留茗官网首页">
             <div className="w-10 h-10 rounded-full bg-[#cc4040] flex items-center justify-center text-white font-serif text-xl font-bold shadow-md">
               茶
             </div>
@@ -68,11 +68,16 @@ export default function Header() {
           <div className="flex items-center gap-4 text-gray-700">
             <button
               onClick={() => setIsSearchOpen(true)}
+              aria-label="搜索茶礼或茗茶"
               className="hover:text-[#cc4040] transition-colors p-2 hover:bg-gray-50 rounded-full outline-none"
             >
               <Search className="w-5 h-5" strokeWidth={1.5} />
             </button>
-            <Link href="/mybox" className="hover:text-[#cc4040] transition-colors p-2 hover:bg-gray-50 rounded-full">
+            <Link 
+              href="/mybox" 
+              aria-label="查看我的定制茶盒"
+              className="hover:text-[#cc4040] transition-colors p-2 hover:bg-gray-50 rounded-full"
+            >
               <User className="w-5 h-5" strokeWidth={1.5} />
             </Link>
           </div>

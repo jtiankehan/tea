@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   experimental: {
     staleTimes: {
       dynamic: 0,
-      static: 0,
+      static: 30,
     },
   },
   // 为所有路由添加 no-cache 响应头

@@ -157,6 +157,7 @@ export default function ProductDetail() {
                 </div>
                 <Link 
                   href="/customization"
+                  aria-label={`立即定制 ${product.name} 茶礼礼盒`}
                   className="bg-[#cc4040] text-white px-10 py-4 rounded-full font-serif text-sm tracking-[0.2em] hover:bg-[#b03030] transition-all hover:scale-105 shadow-xl"
                 >
                   立即定制此款
@@ -174,7 +175,7 @@ export default function ProductDetail() {
               <div className="w-80 h-96 relative z-10 drop-shadow-[20px_40px_60px_rgba(0,0,0,0.5)]">
                 <Image 
                   src={product.img} 
-                  alt={product.name} 
+                  alt={`饮者留茗 - ${product.name}高山原叶茶礼陶瓷罐装`} 
                   fill 
                   className="object-contain" 
                   priority

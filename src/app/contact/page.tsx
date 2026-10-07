@@ -74,7 +74,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-[10px] tracking-widest text-gray-400 uppercase mb-1 font-sans">招商及大客户热线</p>
-                    <p className="text-2xl font-serif font-bold text-[#1a1a1a]">400 110 3366</p>
+                    <a href="tel:4001103366" aria-label="拨打招商及大客户热线 400 110 3366" className="text-2xl font-serif font-bold text-[#1a1a1a] hover:text-[#cfaa6b] transition-colors block">
+                      400 110 3366
+                    </a>
                     <p className="text-xs text-gray-400 mt-1">周一至周日 09:00 - 21:00</p>
                   </div>
                 </div>
@@ -85,8 +87,16 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-[10px] tracking-widest text-gray-400 uppercase mb-1 font-sans">深圳体验馆</p>
-                    <p className="text-lg font-serif font-bold text-[#1a1a1a]">深圳市龙华区新区大道3号翠岭华庭17号</p>
-                    <Link href="#" className="text-[#cfaa6b] text-xs font-serif mt-2 inline-block border-b border-[#cfaa6b]/30 pb-0.5 hover:border-[#cfaa6b] transition-all">在地图中开启</Link>
+                    <address className="text-lg font-serif font-bold text-[#1a1a1a] not-italic">深圳市龙华区新区大道3号翠岭华庭17号</address>
+                    <a 
+                      href="https://uri.amap.com/search?keyword=深圳市龙华区新区大道3号翠岭华庭17号" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      aria-label="在地图中查看深圳体验馆位置"
+                      className="text-[#cfaa6b] text-xs font-serif mt-2 inline-block border-b border-[#cfaa6b]/30 pb-0.5 hover:border-[#cfaa6b] transition-all"
+                    >
+                      在地图中开启
+                    </a>
                   </div>
                 </div>
 
@@ -96,7 +106,9 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="text-[10px] tracking-widest text-gray-400 uppercase mb-1 font-sans">电子邮箱</p>
-                    <p className="text-lg font-serif font-bold text-[#1a1a1a]">service@yczbpuer.com</p>
+                    <a href="mailto:service@yczbpuer.com" aria-label="发送邮件至 service@yczbpuer.com" className="text-lg font-serif font-bold text-[#1a1a1a] hover:text-[#cfaa6b] transition-colors block">
+                      service@yczbpuer.com
+                    </a>
                   </div>
                 </div>
 
